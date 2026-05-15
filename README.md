@@ -38,7 +38,7 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 | `EXECUTABLE` | Path to macro executing on each worker node for each input file. |
 | `FILELIST` | Path to plain text file containing one input file on every line. One job is submitted for each input file. |
 | `OUTPUT_DIR` | Directory where output ROOT files are stored. A timestamped output subdirectory is created here. |
-| `--no-submit` | Optional flag to generate the submission file without submitting. |
+| `-n` | Optional flag to generate the submission file without submitting. |
 
 <h2>Working Example</h2>
 
