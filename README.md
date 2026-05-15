@@ -18,7 +18,7 @@ These two bash scripts act as a simple wrapper for submitting HTCondor jobs on a
 <br>
 
 | Script | Description |
-| - | - |
+| :-: | - |
 | `make_condor.sh` | Entry point called by the user. Generates a working directory, an HTCondor submission file, and submits the jobs (skippable with `-n`). |
 | `runtime_wrapper.sh` | Sets up CMSSW runtime environment and executes the user-provided executable based on its type (`.C`, `.cpp`, `.cc`, `.cxx`, `.py`, or `.sh`). |
 
@@ -33,7 +33,7 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 ```
 
 | Argument | Description |
-| - | - |
+| :-: | - |
 | `JOBNAME` | Label for the set of jobs, used in directory and file naming. |
 | `EXECUTABLE` | Path to macro executing on each worker node for each input file. |
 | `FILELIST` | Path to plain text file containing one input file on every line. One job is submitted for each input file. |
@@ -70,7 +70,7 @@ The filelist used in this example is shown below. This format is needed to prope
 This wrapper, as written, passes exactly two positional arguments — an input file and an output file — to the user-provided executable. This convention is enforced within `runtime_wrapper.sh`, regardless of the executable file type, as shown below. Compatibility of the executable with this interface should be verified before submitting jobs.
 
 | Extension | Interpreter | Command |
-| - | - | - |
+| :-: | :-: | - |
 | `.C`, `.cpp`, `.cc`, `.cxx` | ROOT | `root -l -b -q 'executable.C("INPUT_FILE", "OUTPUT_FILE")'` |
 | `.py` | cmsRun | `cmsRun executable.py INPUT_FILE OUTPUT_FILE` |
 | `.sh` | bash | `./executable.sh INPUT_FILE OUTPUT_FILE` |
@@ -97,7 +97,7 @@ condor_<JOBNAME>_<YEAR-MONTH-DAY_HOUR-MINUTE-SECOND>/
 These commands can be run in a terminal logged into LXPLUS to interact with HTCondor. These are the most common Condor commands, but there are many more.
 
 | Command | Description |
-| - | - |
+| :-: | - |
 | `condor_q` | Show job queue on the local schedd. |
 | `condor_q -better-analyze <JOB_ID>` | Diagnose, potentially idle, job with specified ID. |
 | `condor_q -hold` | Show only held jobs and their hold reasons. |
@@ -114,7 +114,7 @@ The following ajustable parameters are, or are able to be, set within `make_cond
 **`+JobFlavour`** sets the maximum wall clock time allowed per job. The available flavours and their time limits are shown below. The default in this wrapper is `longlunch` (2 hours).
   
 | JobFlavour | Time Limit |
-| - | - |
+| :-: | :-: |
 | `espresso` | 20 minutes |
 | `microcentury` | 1 hour |
 | `longlunch` | 2 hours |
