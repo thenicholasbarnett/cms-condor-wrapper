@@ -11,7 +11,7 @@
 
 HTCondor (formerly Condor) is a distributed high throughput computing workload manager developed at the University of Wisconsin-Madison. Users submit jobs to an HTCondor queue, and HTCondor handles scheduling and execution across available worker nodes. HTCondor is open source and licensed under Apache 2.0, with extensive documentation available in the resources section.
 <br><br>
-<h1>HTCondor Job Submission</h1>
+<h1>Job Submission Wrapper</h1>
 
 These two bash scripts act as a simple wrapper for submitting HTCondor jobs on any system with CMSSW and HTCondor access, such as LXPLUS. By specifying a CMSSW release directory, users can generate and submit jobs with a single terminal command.
 
@@ -19,8 +19,8 @@ These two bash scripts act as a simple wrapper for submitting HTCondor jobs on a
 
 | Script | Description |
 | :-: | - |
-| `make_condor.sh` | Entry point called by the user. Generates a working directory, an HTCondor submission file, and submits the jobs (skippable with `-n`). |
-| `runtime_wrapper.sh` | Sets up CMSSW runtime environment and executes the user-provided executable based on its type (`.C`, `.cpp`, `.cc`, `.cxx`, `.py`, or `.sh`). |
+| `make_condor.sh` | Entry point called by the user. Generates a working directory, an HTCondor submission file, and submits the jobs (skippable with either `-n` or `--no-submit`). |
+| `runtime_wrapper.sh` | Sets up CMSSW runtime environment and executes the user-provided executable based on its type (compatible with `.C`, `.cpp`, `.cc`, `.cxx`, `.py`, and `.sh`). |
 
 <h2>Usage</h2>
 
@@ -35,7 +35,7 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 | Argument | Description |
 | :-: | - |
 | `JOBNAME` | Label for the set of jobs, used in directory and file naming. |
-| `EXECUTABLE` | Path to macro executing on each worker node for each input file. |
+| `EXECUTABLE` | Path to macro executing on the worker node for each input file. |
 | `FILELIST` | Path to plain text file containing one input file on every line. One job is submitted for each input file. |
 | `OUTPUT_DIR` | Directory where output ROOT files are stored. A timestamped output subdirectory is created here. |
 | `-n` | Optional flag to generate the submission file without submitting. |
@@ -44,13 +44,13 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 
 > Don't forget to run `chmod +x make_condor.sh` before executing `make_condor.sh` for the first time
 
-In this example a ROOT based macro is generating dijet asymmetries from ten HiForest files made from a hard QCD MC sample of the 2024 pp reference run (5.36 TeV) generated with Pythia. This pp reference run was collected for comparisons with the PbPb collisions that followed shortly after.
+In this example a ROOT interpretable macro is generating dijet asymmetries from ten files. These input files contain hard QCD events in a Pythia sample generated for the 2024 pp reference run (5.36 TeV). This pp reference run was collected for comparisons with the PbPb collisions that followed shortly after.
 
 ```
 ./make_condor.sh DijetAsymmetry_2024ppRef /afs/cern.ch/user/n/nbarnett/public/executable_files/asymmetry_generator_condor_2024ppRef_MC_5_12_2026.C /afs/cern.ch/user/n/nbarnett/public/txt_files/filelists/filelist_HiForest_2024ppref_MC_withPU_10files.txt .
 ```
 
-The filelist used in this example is shown below. This format is needed to properly use this Condor submission wrapper.
+The filelist used in this example is shown below. This format is needed to be compatible with this Condor submission wrapper.
 
 ```
 /eos/cms/store/group/phys_heavyions/nbarnett/Forests/MC/forests_2024ppRef_MC_withPU/HiForestMiniAOD_1006.root
@@ -77,13 +77,13 @@ This wrapper, as written, passes exactly two positional arguments — an input f
 
 <h3>Working Directory</h3>
 
-A working directory is where a Condor submission file is made and submitted. The filelist, executable, jobname, submission file, submit generator, and runtime wrapper are all put into this working directory. Every working directory is timestamped and contains everything used in the Condor submission. The name and output structure of any working directory is shown below.
+A working directory is made for each job submission using this wrapper. The HTCondor submission file is made and submitted from this working directory, which contains a copy of the executable and filelist at the time of submission. This working directory is timestamped and contains everything used in the Condor submission, making it easy to reproduce or reference any job afterwards. The name and output structure of this working directory is shown below. 
 
 ```
 condor_<JOBNAME>_<YEAR-MONTH-DAY_HOUR-MINUTE-SECOND>/
-├── submit_<JOBNAME>.condor
 ├── <EXECUTABLE>
 ├── <FILELIST>
+├── submit_<JOBNAME>.condor
 └── logs/
     ├── out/   # stdout (.out) for each job
     ├── err/   # stderr (.err) for each job
@@ -94,7 +94,7 @@ condor_<JOBNAME>_<YEAR-MONTH-DAY_HOUR-MINUTE-SECOND>/
 
 <summary><h3>Condor Commands</h3></summary>
 
-These commands can be run in a terminal logged into LXPLUS to interact with HTCondor. These are the most common Condor commands, but there are many more.
+These commands can be run in a terminal to interact with HTCondor. These are the most common Condor commands, but there are many more.
 
 | Command | Description |
 | :-: | - |
@@ -109,7 +109,7 @@ These commands can be run in a terminal logged into LXPLUS to interact with HTCo
 
 <h3>Notes</h3>
 
-The following ajustable parameters are, or are able to be, set within `make_condor.sh`.
+The following ajustable parameters are set within `make_condor.sh`.
 
 **`+JobFlavour`** sets the maximum wall clock time allowed per job. The available flavours and their time limits are shown below. The default in this wrapper is `longlunch` (2 hours).
   
@@ -132,7 +132,7 @@ request_memory = <MB>
 
 <h3>Additional Resources</h3>
 
-* [CERN Batch Service Documentation](https://batchdocs.web.cern.ch/) — official guide for HTCondor on lxplus
+* [CERN Batch Service Documentation](https://batchdocs.web.cern.ch/) — official guide for HTCondor on LXPLUS
 * [CERN HTCondor Submission File Guide](https://batchdocs.web.cern.ch/local/submit.html) — details on submission file parameters like `JobFlavour`, `request_cpus`, etc.
 * [Condor Commands Reference (CERN TWiki)](https://twiki.cern.ch/twiki/bin/view/CENF/NeutrinoClusterCondorDoc) - reference for commands `condor_q`, `condor_status`, `condor_rm`, and more *(requires CERN login)*
 * [HTCondor Documentation](https://htcondor.org/documentation/htcondor.html) - official HTCondor webpage, manual, and user guide
