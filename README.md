@@ -71,9 +71,9 @@ This wrapper, as written, passes exactly two positional arguments — an input f
 
 | Extension | Interpreter | Command |
 | - | - | - |
-| `.C`, `.cpp`, `.cc`, `.cxx` | `ROOT` | `root -l -b -q 'executable.C("INPUT_FILE", "OUTPUT_FILE")'` |
-| `.py` | `cmsRun` | `cmsRun executable.py INPUT_FILE OUTPUT_FILE` |
-| `.sh` | `bash` | `./executable.sh INPUT_FILE OUTPUT_FILE` |
+| `.C`, `.cpp`, `.cc`, `.cxx` | ROOT | `root -l -b -q 'executable.C("INPUT_FILE", "OUTPUT_FILE")'` |
+| `.py` | cmsRun | `cmsRun executable.py INPUT_FILE OUTPUT_FILE` |
+| `.sh` | bash | `./executable.sh INPUT_FILE OUTPUT_FILE` |
 
 <h3>Working Directory</h3>
 
