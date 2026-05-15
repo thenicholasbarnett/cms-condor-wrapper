@@ -71,9 +71,9 @@ This wrapper, as written, passes exactly two positional arguments — an input f
 
 | Extension | Interpreter | Command |
 | - | - | - |
-| `.C`, `.cpp`, `.cc`, or `.cxx` | `root` | `root -l -b -q 'executable.C'("INPUT_FILE", "OUTPUT_FILE")'` |
+| `.C`, `.cpp`, `.cc`, `.cxx` | `ROOT` | `root -l -b -q 'executable.C("INPUT_FILE", "OUTPUT_FILE")'` |
 | `.py` | `cmsRun` | `cmsRun executable.py INPUT_FILE OUTPUT_FILE` |
-| `.sh` | `./` | `./executable.sh INPUT_FILE OUTPUT_FILE` |
+| `.sh` | `bash` | `./executable.sh INPUT_FILE OUTPUT_FILE` |
 
 <h3>Working Directory</h3>
 
@@ -109,7 +109,7 @@ These commands can be run in a terminal logged into LXPLUS to interact with HTCo
 
 <h3>Notes</h3>
 
-The following parameters are set within `make_condor.sh` and can be adjusted.
+The following ajustable parameters are, or are able to be, set within `make_condor.sh`.
 
 **`+JobFlavour`** sets the maximum wall clock time allowed per job. The available flavours and their time limits are shown below. The default in this wrapper is `longlunch` (2 hours).
   
@@ -136,5 +136,5 @@ request_memory = <MB>
 * [CERN HTCondor Submission File Guide](https://batchdocs.web.cern.ch/local/submit.html) — details on submission file parameters like `JobFlavour`, `request_cpus`, etc.
 * [Condor Commands Reference (CERN TWiki)](https://twiki.cern.ch/twiki/bin/view/CENF/NeutrinoClusterCondorDoc) - reference for commands `condor_q`, `condor_status`, `condor_rm`, and more *(requires CERN login)*
 * [HTCondor Documentation](https://htcondor.org/documentation/htcondor.html) - official HTCondor webpage, manual, and user guide
-* [HTCondor Source Code Repository](https://github.com/htcondor/htcondor) - open-source codebase for HTCondor, licensed under Apache 2.0
+* [HTCondor Source Code Repository](https://github.com/htcondor/htcondor) - open-source codebase for HTCondor
 
