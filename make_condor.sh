@@ -51,7 +51,7 @@ mkdir -p "${WORKDIR}"
 
     cat > "${SUBMISSION_FILE}" <<EOF
 Universe                = vanilla
-Executable              = runtime_wrapper.sh
+Executable              = ${WRAPPER_DIR}/runtime_wrapper.sh
 
 +JobFlavour             = "longlunch"
 
