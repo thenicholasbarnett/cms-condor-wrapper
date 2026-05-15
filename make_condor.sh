@@ -9,7 +9,7 @@ fi
 JOBNAME="$1"
 EXECUTABLE="$(realpath "$2")"
 FILELIST="$(realpath "$3")"
-OUTPUT_DIR="$4"
+OUTPUT_DIR="$(realpath "$4")"
 
 NO_SUBMIT=false
 if [[ $# -eq 5 && ( "$5" == "--no-submit" || "$5" == "-n" ) ]]; then
