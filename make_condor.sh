@@ -22,6 +22,7 @@ fi
 TODAY=$(date +"%Y-%m-%d_%H-%M-%S")
 WORKDIR="condor_${JOBNAME}_${TODAY}"
 WRAPPER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+chmod +x runtime_wrapper.sh
 
 echo "Making working directory: ${WORKDIR}"
 
@@ -36,8 +37,6 @@ mkdir -p "${WORKDIR}"
 
     cp "${EXECUTABLE}" .
     cp "${FILELIST}" .
-    cp "${WRAPPER_DIR}/runtime_wrapper.sh" .
-    chmod +x runtime_wrapper.sh
 
     if [[ "${EXE_NAME}" == *.sh ]]; then
         chmod +x "${EXE_NAME}"
@@ -61,7 +60,7 @@ when_to_transfer_output = ON_EXIT
 
 request_cpus            = 4
 
-Transfer_Input_Files    = $(pwd)/runtime_wrapper.sh,$(pwd)/${EXE_NAME}
+Transfer_Input_Files    = ${WRAPPER_DIR}/runtime_wrapper.sh,$(pwd)/${EXE_NAME}
 EOF
 
     COUNT=0
