@@ -101,6 +101,7 @@ These commands can be run in a terminal logged into LXPLUS to interact with HTCo
 | `condor_q` | Show job queue on the local schedd. |
 | `condor_q -better-analyze <JOB_ID>` | Diagnose, potentially idle, job with specified ID. |
 | `condor_q -hold` | Show only held jobs and their hold reasons. |
+| `condor_q -idle` | Show only idle jobs. |
 | `condor_rm <JOB_ID>` | Remove job with specified ID from the queue. |
 | `condor_rm -all` | Remove all submitted jobs from the queue. |
 
