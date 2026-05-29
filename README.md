@@ -47,7 +47,7 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 In this example a ROOT interpretable macro is generating dijet asymmetries from ten files. These input files contain hard QCD events in a Pythia sample generated for the 2024 pp reference run (5.36 TeV). This pp reference run was collected for comparisons with the PbPb collisions that followed shortly after.
 
 ```
-./make_condor.sh DijetAsymmetry_2024ppRef /afs/cern.ch/user/n/nbarnett/public/executable_files/asymmetry_generator_condor_2024ppRef_MC_5_12_2026.C /afs/cern.ch/user/n/nbarnett/public/txt_files/filelists/filelist_HiForest_2024ppref_MC_withPU_10files.txt . -n
+./make_condor.sh DijetAsymmetry_2024ppRef /afs/cern.ch/user/n/nbarnett/public/executables/asymmetry_generator_condor_2024ppRef_MC_5_12_2026.C /afs/cern.ch/user/n/nbarnett/public/txt_files/filelists/filelist_HiForest_2024ppref_MC_withPU_10files.txt . -n
 ```
 
 The filelist used in this example is shown below. This format is needed to be compatible with this Condor submission wrapper.
