@@ -7,8 +7,8 @@ if [[ $# -ne 3 ]]; then
 fi
 
 START_DIR="$(pwd)"
-EXECUTABLE="$(realpath "$1")"
-INPUT="$(realpath "$2")"
+EXECUTABLE="$1"
+INPUT="$2"
 OUTPUT="$3"
 
 # Set this to your CMSSW src directory on AFS or EOS, e.g.:
