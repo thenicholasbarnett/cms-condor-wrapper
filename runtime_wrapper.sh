@@ -24,7 +24,6 @@ echo "Running in CMSSW environment: $(basename "$(dirname "${CMSSW_SRC}")")"
 source /cvmfs/cms.cern.ch/cmsset_default.sh
 cd "${CMSSW_SRC}"
 eval "$(scramv1 runtime -sh)"
-cmsenv
 cd "${START_DIR}"
 
 case "${EXECUTABLE}" in
