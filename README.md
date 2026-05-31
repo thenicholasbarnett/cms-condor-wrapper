@@ -105,6 +105,8 @@ These commands can be run in a terminal to interact with HTCondor. These are the
 | `condor_rm <JOB_ID>` | Remove job with specified ID from the queue. |
 | `condor_rm -all` | Remove all submitted jobs from the queue. |
 | `condor_userprio` | Show information about job priorities for users on local node. |
+| `myschedd show` | Show what schedd is assigned to you. |
+| `myschedd bump` | Change what schedd is assigned to you. |
 
 </details>
 
