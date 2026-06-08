@@ -29,7 +29,7 @@ Specify which CMSSW release to use by setting `CMSSW_SRC` on line 16 of `runtime
 Execute the following terminal command to generate (and submit) HTCondor jobs. A timestamped working directory is created in the location `make_condor.sh` is executed. 
 
 ```
-./make_condor.sh JOBNAME EXECUTABLE FILELIST OUTPUT_DIR [--no-submit|-n]
+bash make_condor.sh JOBNAME EXECUTABLE FILELIST OUTPUT_DIR [--no-submit|-n]
 ```
 
 | Argument | Description |
@@ -42,12 +42,10 @@ Execute the following terminal command to generate (and submit) HTCondor jobs. A
 
 <h2>Working Example</h2>
 
-> Don't forget to run `chmod +x make_condor.sh` before executing `make_condor.sh` for the first time
-
 In this example a ROOT interpretable macro is generating dijet asymmetries from ten files. These input files contain hard QCD events in a Pythia sample generated for the 2024 pp reference run (5.36 TeV). This pp reference run was collected for comparisons with the PbPb collisions that followed shortly after.
 
 ```
-./make_condor.sh DijetAsymmetry_2024ppRef /afs/cern.ch/user/n/nbarnett/public/executables/asymmetry_generator_condor_2024ppRef_MC_5_12_2026.C /afs/cern.ch/user/n/nbarnett/public/txt_files/filelists/filelist_HiForest_2024ppref_MC_withPU_10files.txt . -n
+bash make_condor.sh DijetAsymmetry_2024ppRef /afs/cern.ch/user/n/nbarnett/public/executables/asymmetry_generator_condor_2024ppRef_MC_5_12_2026.C /afs/cern.ch/user/n/nbarnett/public/txt_files/filelists/filelist_HiForest_2024ppref_MC_withPU_10files.txt . -n
 ```
 
 The filelist used in this example is shown below. This format is needed to be compatible with this Condor submission wrapper.
