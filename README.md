@@ -117,19 +117,19 @@ There's an optional flag that can be used in this bash script to do a zombie che
 <br><br>
 This bash script can be executed by launching a new bash process in a couple ways.
 ```
-bash CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+bash batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
 ```
-After giving execute permission (`chmod +x CMS_2026PbPb/executable/batch_hadd.sh`) this shell script can also be executed in a child process like this.
+After giving execute permission (`chmod +x batch_hadd.sh`) this shell script can also be executed in a child process like this.
 ```
-./CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+./batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
 ```
 This bash script can be executed with the following terminal commands in the current shell session.
 > WARNING: Executing in the current shell session is not recommended because if the argument validation fails then the current terminal session will close entirely
 ```
-source CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+source batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
 ```
 ```
-. CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+. batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
 ```
 Details on each positional argument this shell takes as an input.
 | Argument | Description |
@@ -138,6 +138,7 @@ Details on each positional argument this shell takes as an input.
 | `IN_FILES` | Pattern for the input ROOT files to be merged. Example: `path/to/files/*root` |
 | `BATCH_SIZE` | Number of ROOT files in each batch to hadd. |
 | `NJOBS` | Number of parallel hadd commands to run. |
+| `-z` | Optional flag to check for and skip zombie or corrupt input files before merging. |
 
 <h3>Notes</h3>
 
@@ -157,7 +158,7 @@ The following ajustable parameters are set within `make_condor.sh`.
 
 **`request_cpus`** sets the number of CPU cores requested for each job. The default in this wrapper is `4`.
 
-**`request_memory`** sets the amount of RAM requested for each job. This wrapper does not request a specific amount of memory for each job by default. To specify `request_memory` for each job add the following to `make_condor.sh` on line 62:
+**`request_memory`** sets the amount of RAM requested for each job. This wrapper does not request a specific amount of memory for each job by default. To specify `request_memory` for each job add the following to the submit file header block in `make_condor.sh`:
 ```
 request_memory = <MB>
 ```
