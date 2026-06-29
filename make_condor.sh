@@ -20,7 +20,7 @@ elif [[ $# -eq 5 ]]; then
 fi
 
 TODAY=$(date +"%Y-%m-%d_%H-%M-%S")
-WORKDIR="condor_${JOBNAME}_${TODAY}"
+WORKDIR="condor/${JOBNAME}/${TODAY}"
 WRAPPER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 chmod +x runtime_wrapper.sh
 
@@ -44,7 +44,7 @@ mkdir -p "${WORKDIR}"
 
     mkdir -p logs/out logs/err logs/log
 
-    mkdir -p "${OUTPUT_DIR}/${WORKDIR}"
+    mkdir -p "${OUTPUT_DIR}/condor/${JOBNAME}/${TODAY}"
 
     SUBMISSION_FILE="submit_${JOBNAME}.condor"
     echo "Making Condor submission file: ${SUBMISSION_FILE}"
@@ -54,6 +54,7 @@ Universe                = vanilla
 Executable              = ${WRAPPER_DIR}/runtime_wrapper.sh
 
 +JobFlavour             = "longlunch"
+JobBatchName            = "${JOBNAME}"
 
 should_transfer_files   = YES
 when_to_transfer_output = ON_EXIT
@@ -69,7 +70,7 @@ EOF
 
         [[ -z "${INPUT_FILE}" ]] && continue
 
-        OUTPUT_FILE="${OUTPUT_DIR}/${WORKDIR}/output_${JOBNAME}_${COUNT}.root"
+        OUTPUT_FILE="${OUTPUT_DIR}/condor/${JOBNAME}/${TODAY}/output_${COUNT}.root"
 
         cat >> "${SUBMISSION_FILE}" <<EOF
 Arguments = ${EXE_NAME} ${INPUT_FILE} ${OUTPUT_FILE}

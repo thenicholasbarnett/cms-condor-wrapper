@@ -37,7 +37,7 @@ bash make_condor.sh JOBNAME EXECUTABLE FILELIST OUTPUT_DIR [--no-submit|-n]
 | `JOBNAME` | Label for the set of jobs, used in directory and file naming. |
 | `EXECUTABLE` | Path to macro executing on the worker node for each input file. |
 | `FILELIST` | Path to plain text file containing one input file on every line. One job is submitted for each input file. |
-| `OUTPUT_DIR` | Directory where output ROOT files are stored. A timestamped output subdirectory is created here. |
+| `OUTPUT_DIR` | Directory where output ROOT files are stored. Output is written to `OUTPUT_DIR/condor/<JOBNAME>/<timestamp>/`. |
 | `-n` | Optional flag to generate the submission file without submitting. |
 
 <h2>Working Example</h2>
@@ -75,10 +75,10 @@ This wrapper, as written, passes exactly two positional arguments — an input f
 
 <h3>Working Directory</h3>
 
-A working directory is made for each job submission using this wrapper. The HTCondor submission file is made and submitted from this working directory, which contains a copy of the executable and filelist at the time of submission. This working directory is timestamped and contains everything used in the Condor submission, making it easy to reproduce or reference any job afterwards. The name and output structure of this working directory is shown below. 
+A working directory is made for each job submission using this wrapper. The HTCondor submission file is made and submitted from this working directory, which contains a copy of the executable and filelist at the time of submission. This working directory is timestamped and contains everything used in the Condor submission, making it easy to reproduce or reference any job afterwards. The name and output structure of this working directory is shown below.
 
 ```
-condor_<JOBNAME>_<YEAR-MONTH-DAY_HOUR-MINUTE-SECOND>/
+condor/<JOBNAME>/<YEAR-MONTH-DAY_HOUR-MINUTE-SECOND>/
 ├── <EXECUTABLE>
 ├── <FILELIST>
 ├── submit_<JOBNAME>.condor
