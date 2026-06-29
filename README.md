@@ -1,12 +1,12 @@
 <table>
 <tr>
-<td><img src="images/CMS_logo.png" alt="CMS logo" width="250"/></td>
+<td><img src="img/CMS_logo.png" alt="CMS logo" width="250"/></td>
 <td>This repository provides two bash scripts for simplifying HTCondor job submission within the CMS collaboration. Any and all contents of this repository are free to use for any purpose.</td>
 </tr>
   
 </table>
 <p align="center">
-  <img src="images/HTCondor_logo.png" alt="HTCondor logo" width="700"/>
+  <img src="img/HTCondor_logo.png" alt="HTCondor logo" width="700"/>
 </p>
 
 HTCondor (formerly Condor) is a distributed high throughput computing workload manager developed at the University of Wisconsin-Madison. Users submit jobs to an HTCondor queue, and HTCondor handles scheduling and execution across available worker nodes. HTCondor is open source and licensed under Apache 2.0, with extensive documentation available in the resources section.
