@@ -105,8 +105,39 @@ These commands can be run in a terminal to interact with HTCondor. These are the
 | `condor_userprio` | Show information about job priorities for users on local node. |
 | `myschedd show` | Show what schedd is assigned to you. |
 | `myschedd bump` | Change what schedd is assigned to you. |
-
 </details>
+
+<h3>Merging Many ROOT Files</h3>
+
+Many ROOT files can be merged using the command hadd. The command `hadd output.root path/to/inputs/*root` will add compatible ROOT objects, such as TTrees, RNTuples, and histograms. To be compatible the input files must have the same object names. These added objects are placed into an output ROOT file upon running hadd. This command is particularly useful after processing many files in parallel. More information on hadd can be found in the [ROOT documentation](https://root.cern/doc/v638/hadd_8cxx.html).
+<br><br>
+Using hadd on very many files may take an exceedingly long time and is more likely to give ill-defined behavior or crash. By using hadd on subsets of a large number of files, then using hadd on the output, these issues can be avoided. This shell script avoids some issues with hadd by iteratively merging batches of ROOT files. This bash script can run hadd multiple times in parallel on the same machine, further reducing the time to add many ROOT files. If this script is stopped or crashes there will be a log file available to see in the output file directory with information leading up to the stoppage. 
+<br><br>
+There's an optional flag that can be used in this bash script to do a zombie check. This zombie check looks for unclosed, corrupt, or files otherwise marked as zombies in the input files given. The files marked as zombies will be identified and described in the log file.
+<br><br>
+This bash script can be executed by launching a new bash process in a couple ways.
+```
+bash CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+```
+After giving execute permission (`chmod +x CMS_2026PbPb/executable/batch_hadd.sh`) this shell script can also be executed in a child process like this.
+```
+./CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+```
+This bash script can be executed with the following terminal commands in the current shell session.
+> WARNING: Executing in the current shell session is not recommended because if the argument validation fails then the current terminal session will close entirely
+```
+source CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+```
+```
+. CMS_2026PbPb/executable/batch_hadd.sh OUT_FILE "IN_FILES" BATCH_SIZE NJOBS [-z|--zombie-check]
+```
+Details on each positional argument this shell takes as an input.
+| Argument | Description |
+| :-: | - |
+| `OUT_FILE` | Merged output ROOT file. |
+| `IN_FILES` | Pattern for the input ROOT files to be merged. Example: `path/to/files/*root` |
+| `BATCH_SIZE` | Number of ROOT files in each batch to hadd. |
+| `NJOBS` | Number of parallel hadd commands to run. |
 
 <h3>Notes</h3>
 
