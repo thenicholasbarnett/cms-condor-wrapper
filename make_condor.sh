@@ -70,6 +70,7 @@ EOF
 
     COUNT=0
 
+    start_bar_timer
     draw_bar "${BAR_COLOR}" "${JOBNAME}:" 0 "${TOTAL}"
 
     while IFS= read -r INPUT_FILE; do
@@ -93,7 +94,7 @@ EOF
 
     done < "${FILELIST_NAME}"
 
-    printf "\n"
+    printf "\n\n"
 
     if [[ "$NO_SUBMIT" == true ]]; then
         echo "--no-submit flag enabled — skipping condor_submit."

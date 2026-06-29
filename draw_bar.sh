@@ -2,6 +2,9 @@ _BAR_COLORS=(green blue cyan magenta yellow)
 _LAST_BAR_COLOR=""
 _COLOR_QUEUE=()
 BAR_COLOR=""
+_BAR_START_TIME=""
+
+start_bar_timer() { _BAR_START_TIME=$(date +%s); }
 
 # Sets BAR_COLOR by drawing from a shuffled deck; refills when exhausted,
 # guaranteeing every color appears once per cycle with no consecutive repeats.
@@ -47,6 +50,19 @@ draw_bar() {
     local filled_str="" empty_str=""
     (( filled > 0 )) && filled_str="$(printf '%0.s█' $(seq 1 $filled))"
     (( empty > 0 ))  && empty_str="$(printf '%0.s░' $(seq 1 $empty))"
-    printf "\r  %-20s [${ansi_color}%s${reset}${grey}%s${reset}] %d/%d (%d%%)" \
-        "$label" "$filled_str" "$empty_str" "$current" "$total" "$pct"
+    local rate_str="" time_str=""
+    if [[ -n "$_BAR_START_TIME" && "$current" -gt 0 ]]; then
+        local elapsed=$(( $(date +%s) - _BAR_START_TIME ))
+        if (( elapsed >= 1 )); then
+            rate_str=$(awk "BEGIN{printf \"  %4.1f/s\", $current/$elapsed}")
+            if (( current >= total )); then
+                time_str=$(printf "  %02d:%02d" "$(( elapsed/60 ))" "$(( elapsed%60 ))")
+            elif (( pct >= 10 )); then
+                local eta_secs=$(( elapsed * (total - current) / current ))
+                time_str=$(printf "  %02d:%02d ETA" "$(( eta_secs/60 ))" "$(( eta_secs%60 ))")
+            fi
+        fi
+    fi
+    printf "\r  %-20s [${ansi_color}%s${reset}${grey}%s${reset}]  %d/%d  %3d%%%s%s\033[K" \
+        "$label" "$filled_str" "$empty_str" "$current" "$total" "$pct" "$rate_str" "$time_str"
 }

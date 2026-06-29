@@ -97,6 +97,7 @@ if $ZOMBIE_CHECK; then
     checked=0
     declare -A collected
 
+    start_bar_timer
     draw_bar "$BAR_COLOR" "Zombie check:" 0 "$TOTAL_INPUT"
 
     collect_check_results() {
@@ -142,7 +143,7 @@ if $ZOMBIE_CHECK; then
 
     rm -rf "$tmpdir_check"
     draw_bar "$BAR_COLOR" "Zombie check:" "$TOTAL_INPUT" "$TOTAL_INPUT"
-    printf "\n"
+    printf "\n\n"
 
     ZOMBIE_END=$(date +%s)
     ZOMBIE_ELAPSED=$(( ZOMBIE_END - ZOMBIE_START ))
@@ -184,6 +185,7 @@ while (( ${#current_files[@]} > 1 )); do
     tmpdir_hadd=$(mktemp -d)
     declare -A collected_hadd
 
+    start_bar_timer
     draw_bar "$BAR_COLOR" "Level ${level}:" 0 "$n_batches"
 
     collect_hadd_results() {
@@ -226,7 +228,7 @@ while (( ${#current_files[@]} > 1 )); do
     done
 
     draw_bar "$BAR_COLOR" "Level ${level}:" "$n_batches" "$n_batches"
-    printf "\n"
+    printf "\n\n"
 
     LEVEL_END=$(date +%s)
     LEVEL_ELAPSED=$(( LEVEL_END - LEVEL_START ))
